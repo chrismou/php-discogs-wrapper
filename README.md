@@ -1,4 +1,4 @@
-# PHP Last.fm API Wrapper
+# PHP Discogs API Wrapper
 
 [![Build Status](https://travis-ci.org/chrismou/php-discogs-wrapper.svg?branch=master)](https://travis-ci.org/chrismou/php-discogs-wrapper)
 [![Test Coverage](https://codeclimate.com/github/chrismou/php-discogs-wrapper/badges/coverage.svg)](https://codeclimate.com/github/chrismou/php-discogs-wrapper/coverage)
@@ -8,18 +8,6 @@ A dead simple wrapper class for the discogs API.
 
 This is an early days version. I'd probably advise not using it just yet, as methods are liable to change without notice
 until I'm happy enough with it to tag a version.
-
-## Install
-
-For [composer](http://getcomposer.org) based projects:
-
-```
-composer require chrismou/lastfm
-```
-
-## Usage
-
-Docs to come
 
 
 ## Tests
