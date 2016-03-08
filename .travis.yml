@@ -22,9 +22,9 @@ script:
   - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then vendor/bin/phpunit --coverage-clover build/logs/clover.xml; fi;'
 
 after_script:
-  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then CODECLIMATE_REPO_TOKEN=eb6664ea59c0a1912f21648255109da233b7a4d0aaa79ac11636c43ab2366db9 ./vendor/bin/test-reporter; fi;'
+  - bash -c 'if [ "$TRAVIS_PHP_VERSION" != "hhvm" ]; then CODECLIMATE_REPO_TOKEN=a6f7b38aaded83bcb664a33433d770d280e40b2860daca18c3755f09921c14a3 ./vendor/bin/test-reporter; fi;'
 
 notifications:
   slack:
     rooms:
-      secure: hVq3wlBG+CtH1QHhnLLtVcS/P4f7jA0lrpxsrSRFqzO9jHAvsgxnJZzqxbpUT21GOutmfnzCFK92sZNimdogbOG13xyLhCZ5tLNB5I4Bv+F15W/yhYiUgR15FhXEL3HuR+yleiILX/xafy0TSLMVu0QfvvZinb/YRgGz64MZZElQ6PRQcdPItwU5ysQ7TRd1LJZ1Ya5gMEQLgLe6FDLHJXMWYTEIUc6HwVojsuvvZJcY4ha8bSdORIYS4yXjnsblulcNR7vcxEsVehb5yp6IWIjH6R48hsvGwxcaXtv71OMzcuutHoByizW+Uep3EFBNsmgyHY90Aixr8qNJSx93kAyowNr32uLcODCAcnOP4M5bvRoOUQX+ktHsKe61PGtfNPhNFFdtkiO/lzRKPjvFW7uXZz6xuDzvo/K/qtoUris3dKGxvvO7bsX5xni1k2sd+/nDfhE+ZSQvlWROEfET5yn7cQS13qsYJKgC0OQei4cBo49NQJAH59L5CisM64LImiZcHGoF4bPFrSszgtLYlr3rpp5/EzZT6Z4tExcW7Lei81bjY2u9AZWzQPbSaeIDLWn2xeovmxKO1Fxvv2KzPNRu8o0X5d1zwfNMgrhRJsM39gi99xpz8pdCBT05dtznNuV2ywg0Kwgd5lhWim8MAMHJGMFJS5uiFzaE7thOv5Q=
+      secure: LEyhNn05nE9LFv0y40qAwjwKwKlhHd8Hh/G6Po+Ma299ihbNPlcuf/cz8tsDpiLb+BUDMSB3ycV8r0cl83mlEsGp6EN2JxO1n1WzCSnJn2pzl0E5/IaWfgvGfqQRWfHAQAQzJyxpdlEWCFQBoPJGqdmkbQASfrfK2XAUr5omgHVJeMcIOVRzHyr6HkAKX+Wt/CaNstA3ulCZ6sY8lW65pz7knOgaKncpq9JAUs6K51XCgsSwiaONSgothtx0f8yCl5b0XBdSIOwdXIE6lFjvxhRXuIoxD6kbh6c/QLh7i1D3FDcDdMe+yL4nUamwl/vIxLgl+bsmP/1o19ImLyL2kfjT0E5ujAswPLorWfkNmEGgNieoJKInWhBU+Lo+OXzY45vFzycDs0j9QhAli3fer1YEFsfldaJtQeTMqKfQwbqzy1lxT0BtZdJI5/f486dTvMcpNLDlqrraTz2dJnF7EnUBaHZtulLLvO6D3i3IKPP5AWVM4dso3h7zrkP7eTNLecOJx84GucYYQ9JI7zTgEDh5i72r5gLZVE0r2N3Z0WWYiEZABoqiE+Xf7Y9GmSUFAxQXlCdJ7Z03rtvKooe4LxFU25DYM8C4cO64F6aLQxuAc3K13PJ7/67gKfLG8L8x+l++vo6dXBgOlT+t9nkJYnddpaDLh8TQxemSxP96+gA=
