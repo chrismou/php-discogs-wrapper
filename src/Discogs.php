@@ -47,6 +47,19 @@ class Discogs
     }
 
     /**
+     * @param string $releaseId
+     *
+     * @return \stdClass
+     * @throws NotFoundException
+     */
+    public function release($releaseId)
+    {
+        $uri = 'releases/' . $releaseId;
+
+        return $this->doRequest($uri);
+    }
+
+    /**
      * @param array $params
      *
      * @return \stdClass
