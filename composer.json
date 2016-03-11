@@ -1,6 +1,6 @@
 {
     "name": "chrismou/discogs",
-    "description": "A simple Discogs API wrapper for PHP",
+    "description": "A simple Discogs API wrapper for PHP, with Guzzle 6 support",
     "type": "library",
     "license": "MIT",
     "authors": [

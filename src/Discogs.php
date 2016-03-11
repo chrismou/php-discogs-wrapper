@@ -47,6 +47,19 @@ class Discogs
     }
 
     /**
+     * @param array $params
+     *
+     * @return \stdClass
+     * @throws NotFoundException
+     */
+    public function search(array $params = [])
+    {
+        $uri = 'database/search?' . http_build_query($params);
+
+        return $this->doRequest($uri);
+    }
+
+    /**
      * @param string $uri
      * @param array $parameters
      *
