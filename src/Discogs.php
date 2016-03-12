@@ -34,19 +34,6 @@ class Discogs
     }
 
     /**
-     * @param string $artistId
-     *
-     * @return string
-     * @throws NotFoundException
-     */
-    public function artist($artistId)
-    {
-        $uri = 'artists/' . $artistId;
-
-        return $this->doRequest($uri);
-    }
-
-    /**
      * @param string $releaseId
      *
      * @return \stdClass
@@ -73,6 +60,45 @@ class Discogs
     }
 
     /**
+     * @param string $masterId
+     *
+     * @return \stdClass
+     * @throws NotFoundException
+     */
+    public function masterReleaseVersions($masterId)
+    {
+        $uri = 'masters/' . $masterId . '/versions';
+
+        return $this->doRequest($uri);
+    }
+
+    /**
+     * @param string $artistId
+     *
+     * @return string
+     * @throws NotFoundException
+     */
+    public function artist($artistId)
+    {
+        $uri = 'artists/' . $artistId;
+
+        return $this->doRequest($uri);
+    }
+
+    /**
+     * @param string $artistId
+     *
+     * @return string
+     * @throws NotFoundException
+     */
+    public function artistReleases($artistId)
+    {
+        $uri = 'artists/' . $artistId . '/releases';
+
+        return $this->doRequest($uri);
+    }
+
+    /**
      * @param string $labelId
      *
      * @return \stdClass
@@ -81,6 +107,19 @@ class Discogs
     public function label($labelId)
     {
         $uri = 'labels/' . $labelId;
+
+        return $this->doRequest($uri);
+    }
+
+    /**
+     * @param string $labelId
+     *
+     * @return \stdClass
+     * @throws NotFoundException
+     */
+    public function labelReleases($labelId)
+    {
+        $uri = 'labels/' . $labelId . '/releases';
 
         return $this->doRequest($uri);
     }

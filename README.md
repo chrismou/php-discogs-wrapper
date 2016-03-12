@@ -4,10 +4,9 @@
 [![Test Coverage](https://codeclimate.com/github/chrismou/php-discogs-wrapper/badges/coverage.svg)](https://codeclimate.com/github/chrismou/php-discogs-wrapper/coverage)
 [![Code Climate](https://codeclimate.com/github/chrismou/php-discogs-wrapper/badges/gpa.svg)](https://codeclimate.com/github/chrismou/php-discogs-wrapper)
 
-A dead simple wrapper class for the discogs API.
+A simple wrapper class for the discogs API.
 
-#### This is an early days version. I'd probably advise not using it just yet, as methods are liable to change without notice
-until I'm happy enough with it to tag a version.
+#### This is an early days version. I'd probably advise not using it just yet, as methods are liable to change without notice until I'm happy enough with it to tag a version.
 
 ## Installation
 
@@ -60,9 +59,29 @@ If a request for a single item returns no results (Discogs returns a `404`) the 
 
 * **$releaseId** (string) - The Discogs Release ID
 
+#### `$discogs->masterRelease($releaseId)`
+
+* **$masterId** (string) - The Discogs "Master" ID
+
+#### `$discogs->masterReleaseVersions($releaseId)`
+
+* **$masterId** (string) - The Discogs "Master" ID
+
 #### `$discogs->artist($artistId)`
 
 * **$artistId** (string) - The Discogs Artist ID
+
+#### `$discogs->artistReleases($artistId)`
+
+* **$artistId** (string) - The Discogs Artist ID
+
+#### `$discogs->label($labelId)`
+
+* **$labelId** (string) - The Discogs Label ID
+
+#### `$discogs->labelReleases($labelId)`
+
+* **$labelId** (string) - The Discogs Label ID
 
 #### `$discogs->search($params)`
 
