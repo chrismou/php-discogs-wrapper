@@ -45,9 +45,13 @@ To set up the Discogs API client:
 ```
 $discogs = new \Chrismou\Discogs\Discogs(
     new GuzzleHttp\Client(),
-    YOUR_ACCESS_TOKEN
+    YOUR_ACCESS_TOKEN,
+    'YourApplicationName'
 );
 ```
+
+The 3rd parameter (YourApplicationName) should be something that identifies your application, and is sent along with the request as the User-Agent header. 
+See the [documentation](https://www.discogs.com/developers/#page:home,header:home-general-information) for more details.
 
 ### Methods
 

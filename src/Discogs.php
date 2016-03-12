@@ -3,6 +3,7 @@
 namespace Chrismou\Discogs;
 
 use Chrismou\Discogs\Exception\NotFoundException;
+use GuzzleHttp\ClientInterface;
 
 class Discogs
 {
@@ -19,18 +20,27 @@ class Discogs
     /**
      * @var string
      */
+    protected $applicationIdenfier;
+
+    /**
+     * @var string
+     */
     protected $apiUrl = 'https://api.discogs.com/';
 
     /**
      * Discogs constructor.
      *
      * @param \GuzzleHttp\ClientInterface $httpClient
-     * @param $accessToken
+     * @param string $accessToken
+     * @param string $applicationIdentifer An identifier to use in the User-Agent
+     *     See https://www.discogs.com/developers/#page:home,header:home-general-information
+     *     As a general rule, aim for something like "MyAppName/1.0 +http://mywebaddress.com"
      */
-    public function __construct(\GuzzleHttp\ClientInterface $httpClient, $accessToken)
+    public function __construct(ClientInterface $httpClient, $accessToken, $applicationIdentifer)
     {
         $this->httpClient = $httpClient;
         $this->accessToken = $accessToken;
+        $this->applicationIdenfier = $applicationIdentifer;
     }
 
     /**
@@ -75,7 +85,7 @@ class Discogs
     /**
      * @param string $artistId
      *
-     * @return string
+     * @return \stdClass
      * @throws NotFoundException
      */
     public function artist($artistId)
@@ -88,7 +98,7 @@ class Discogs
     /**
      * @param string $artistId
      *
-     * @return string
+     * @return \stdClass
      * @throws NotFoundException
      */
     public function artistReleases($artistId)
@@ -147,7 +157,15 @@ class Discogs
     protected function doRequest($uri, array $parameters = [])
     {
         try {
-            $request  = $this->httpClient->get($this->buildRequestUrl($uri, $parameters));
+            $request  = $this->httpClient->request(
+                'get',
+                $this->buildRequestUrl($uri, $parameters),
+                [
+                    'headers' => [
+                        'User-Agent' => $this->applicationIdenfier,
+                    ]
+                ]
+            );
             $response = $request->getBody();
         } catch (\GuzzleHttp\Exception\ClientException $e) {
             throw new NotFoundException(json_decode($e->getResponse()->getBody())->message);
