@@ -66,7 +66,7 @@ If a request for a single item returns no results (Discogs returns a `404`) the 
 
 #### `$discogs->search($params)`
 
-* **$params** (array) - An array of search parameters. A full list is available (here)[https://www.discogs.com/developers/#page:database,header:database-search]
+* **$params** (array) - An array of search parameters. A full list is available [here](https://www.discogs.com/developers/#page:database,header:database-search)
 
 ## Tests
 

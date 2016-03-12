@@ -60,6 +60,32 @@ class Discogs
     }
 
     /**
+     * @param string $masterId
+     *
+     * @return \stdClass
+     * @throws NotFoundException
+     */
+    public function masterRelease($masterId)
+    {
+        $uri = 'masters/' . $masterId;
+
+        return $this->doRequest($uri);
+    }
+
+    /**
+     * @param string $labelId
+     *
+     * @return \stdClass
+     * @throws NotFoundException
+     */
+    public function label($labelId)
+    {
+        $uri = 'labels/' . $labelId;
+
+        return $this->doRequest($uri);
+    }
+
+    /**
      * @param array $params
      *
      * @return \stdClass

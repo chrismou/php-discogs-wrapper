@@ -109,6 +109,54 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     /**
      * @test
      */
+    public function it_returns_a_master_release()
+    {
+        $uri = 'masters/' . $this->dummyId;
+
+        $response = new \stdClass();
+        $response->param1 = 'value1';
+
+        $this->mockPsr7Response = new Response(
+            200,
+            [],
+            json_encode($response)
+        );
+
+        $this->mockClient->shouldReceive('get')
+            ->once()
+            ->with($this->buildRequestUrl($uri))
+            ->andReturn($this->mockPsr7Response);
+
+        $this->assertEquals($response, $this->discogs->masterRelease($this->dummyId));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_a_label()
+    {
+        $uri = 'labels/' . $this->dummyId;
+
+        $response = new \stdClass();
+        $response->param1 = 'value1';
+
+        $this->mockPsr7Response = new Response(
+            200,
+            [],
+            json_encode($response)
+        );
+
+        $this->mockClient->shouldReceive('get')
+            ->once()
+            ->with($this->buildRequestUrl($uri))
+            ->andReturn($this->mockPsr7Response);
+
+        $this->assertEquals($response, $this->discogs->label($this->dummyId));
+    }
+
+    /**
+     * @test
+     */
     public function it_returns_a_search_result()
     {
         $params = [
