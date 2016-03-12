@@ -34,13 +34,16 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     /** @var array */
     protected $dummyResponseHeaders;
 
+    /** @var string */
+    protected $dummyApplicationIdentifier;
+
     /**
      * Setup the test class
      */
     public function setUp()
     {
         $this->mockClient = m::mock('\GuzzleHttp\ClientInterface', [
-            'get' => null,
+            'request' => null,
         ]);
 
         $this->mockPsr7Response = m::mock('GuzzleHttp\Psr7\Response', [
@@ -55,7 +58,9 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
 
         $this->dummyId = '12';
 
-        $this->discogs = new Discogs($this->mockClient, $this->accessToken);
+        $this->dummyApplicationIdentifier = 'SuperCoolApp/1.0 +https://github.com/chrismou/php-discogs-wrapper';
+
+        $this->discogs = new Discogs($this->mockClient, $this->accessToken, $this->dummyApplicationIdentifier);
     }
 
     /**
@@ -65,19 +70,7 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     {
         $uri = 'artists/' . $this->dummyId;
 
-        $response = new \stdClass();
-        $response->param1 = 'value1';
-
-        $this->mockPsr7Response = new Response(
-            200,
-            [],
-            json_encode($response)
-        );
-
-        $this->mockClient->shouldReceive('get')
-            ->once()
-            ->with($this->buildRequestUrl($uri))
-            ->andReturn($this->mockPsr7Response);
+        $response = $this->defaultHttpClientExpectations($uri);
 
         $this->assertEquals($response, $this->discogs->artist($this->dummyId));
     }
@@ -89,19 +82,7 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     {
         $uri = 'releases/' . $this->dummyId;
 
-        $response = new \stdClass();
-        $response->param1 = 'value1';
-
-        $this->mockPsr7Response = new Response(
-            200,
-            [],
-            json_encode($response)
-        );
-
-        $this->mockClient->shouldReceive('get')
-            ->once()
-            ->with($this->buildRequestUrl($uri))
-            ->andReturn($this->mockPsr7Response);
+        $response = $this->defaultHttpClientExpectations($uri);
 
         $this->assertEquals($response, $this->discogs->release($this->dummyId));
     }
@@ -113,19 +94,7 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     {
         $uri = 'masters/' . $this->dummyId;
 
-        $response = new \stdClass();
-        $response->param1 = 'value1';
-
-        $this->mockPsr7Response = new Response(
-            200,
-            [],
-            json_encode($response)
-        );
-
-        $this->mockClient->shouldReceive('get')
-            ->once()
-            ->with($this->buildRequestUrl($uri))
-            ->andReturn($this->mockPsr7Response);
+        $response = $this->defaultHttpClientExpectations($uri);
 
         $this->assertEquals($response, $this->discogs->masterRelease($this->dummyId));
     }
@@ -137,19 +106,7 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     {
         $uri = 'masters/' . $this->dummyId . '/versions';
 
-        $response = new \stdClass();
-        $response->param1 = 'value1';
-
-        $this->mockPsr7Response = new Response(
-            200,
-            [],
-            json_encode($response)
-        );
-
-        $this->mockClient->shouldReceive('get')
-            ->once()
-            ->with($this->buildRequestUrl($uri))
-            ->andReturn($this->mockPsr7Response);
+        $response = $this->defaultHttpClientExpectations($uri);
 
         $this->assertEquals($response, $this->discogs->masterReleaseVersions($this->dummyId));
     }
@@ -161,19 +118,7 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     {
         $uri = 'labels/' . $this->dummyId;
 
-        $response = new \stdClass();
-        $response->param1 = 'value1';
-
-        $this->mockPsr7Response = new Response(
-            200,
-            [],
-            json_encode($response)
-        );
-
-        $this->mockClient->shouldReceive('get')
-            ->once()
-            ->with($this->buildRequestUrl($uri))
-            ->andReturn($this->mockPsr7Response);
+        $response = $this->defaultHttpClientExpectations($uri);
 
         $this->assertEquals($response, $this->discogs->label($this->dummyId));
     }
@@ -185,19 +130,7 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     {
         $uri = 'labels/' . $this->dummyId . '/releases';
 
-        $response = new \stdClass();
-        $response->param1 = 'value1';
-
-        $this->mockPsr7Response = new Response(
-            200,
-            [],
-            json_encode($response)
-        );
-
-        $this->mockClient->shouldReceive('get')
-            ->once()
-            ->with($this->buildRequestUrl($uri))
-            ->andReturn($this->mockPsr7Response);
+        $response = $this->defaultHttpClientExpectations($uri);
 
         $this->assertEquals($response, $this->discogs->labelReleases($this->dummyId));
     }
@@ -214,19 +147,7 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
 
         $uri = 'database/search?artist=mou&genre=rock';
 
-        $response = new \stdClass();
-        $response->param1 = 'value1';
-
-        $this->mockPsr7Response = new Response(
-            200,
-            [],
-            json_encode($response)
-        );
-
-        $this->mockClient->shouldReceive('get')
-            ->once()
-            ->with($this->buildRequestUrl($uri))
-            ->andReturn($this->mockPsr7Response);
+        $response = $this->defaultHttpClientExpectations($uri);
 
         $this->assertEquals($response, $this->discogs->search($params));
     }
@@ -255,12 +176,44 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
             $this->mockPsr7Response
         );
 
-        $this->mockClient->shouldReceive('get')
+        $this->mockClient->shouldReceive('request')
             ->once()
-            ->with($this->buildRequestUrl($uri))
             ->andThrow($exception);
 
         $this->assertEquals($response, $this->discogs->artist($this->dummyId));
+    }
+
+    /**
+     * @param string $uri
+     * @param string $method
+     *
+     * @return \stdClass
+     */
+    protected function defaultHttpClientExpectations($uri, $method = 'get')
+    {
+        $response = new \stdClass();
+        $response->param1 = 'value1';
+
+        $this->mockPsr7Response = new Response(
+            200,
+            [],
+            json_encode($response)
+        );
+
+        $this->mockClient->shouldReceive('request')
+            ->once()
+            ->with(
+                $method,
+                $this->buildRequestUrl($uri),
+                [
+                    'headers' => [
+                        'User-Agent' => $this->dummyApplicationIdentifier,
+                    ]
+                ]
+            )
+            ->andReturn($this->mockPsr7Response);
+
+        return $response;
     }
 
     /**
