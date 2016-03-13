@@ -3,6 +3,7 @@
 namespace Chrismou\Discogs\Tests;
 
 use Chrismou\Discogs\Discogs;
+use Chrismou\Discogs\Tests\AbstractTest;
 use GuzzleHttp\Psr7\Response;
 use GuzzleHttp\Exception\ClientException;
 use PHPUnit_Framework_TestCase;
@@ -26,7 +27,7 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     protected $apiUrl;
 
     /** @var string */
-    protected $accessToken;
+    protected $dummyAccessToken;
 
     /** @var string */
     protected $dummyId;
@@ -54,25 +55,13 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
 
         $this->apiUrl = 'https://api.discogs.com/';
 
-        $this->accessToken = 'abcde';
+        $this->dummyAccessToken = 'abcde';
 
         $this->dummyId = '12';
 
         $this->dummyApplicationIdentifier = 'SuperCoolApp/1.0 +https://github.com/chrismou/php-discogs-wrapper';
 
-        $this->discogs = new Discogs($this->mockClient, $this->accessToken, $this->dummyApplicationIdentifier);
-    }
-
-    /**
-     * @test
-     */
-    public function it_returns_an_artist()
-    {
-        $uri = 'artists/' . $this->dummyId;
-
-        $response = $this->defaultHttpClientExpectations($uri);
-
-        $this->assertEquals($response, $this->discogs->artist($this->dummyId));
+        $this->discogs = new Discogs($this->mockClient, $this->dummyAccessToken, $this->dummyApplicationIdentifier);
     }
 
     /**
@@ -109,6 +98,30 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
         $response = $this->defaultHttpClientExpectations($uri);
 
         $this->assertEquals($response, $this->discogs->masterReleaseVersions($this->dummyId));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_an_artist()
+    {
+        $uri = 'artists/' . $this->dummyId;
+
+        $response = $this->defaultHttpClientExpectations($uri);
+
+        $this->assertEquals($response, $this->discogs->artist($this->dummyId));
+    }
+
+    /**
+     * @test
+     */
+    public function it_returns_artist_releases()
+    {
+        $uri = 'artists/' . $this->dummyId . '/releases';
+
+        $response = $this->defaultHttpClientExpectations($uri);
+
+        $this->assertEquals($response, $this->discogs->artistReleases($this->dummyId));
     }
 
     /**
@@ -237,23 +250,9 @@ class DiscogsTest extends PHPUnit_Framework_TestCase
     {
         return array_merge(
             [
-                'token' => $this->accessToken
+                'token' => $this->dummyAccessToken
             ],
             $parameters
         );
-    }
-
-    /**
-     * Custom teardown to include mockery expectations as assertions
-     */
-    public function tearDown()
-    {
-        if ($container = m::getContainer()) {
-            $this->addToAssertionCount($container->mockery_getExpectationCount());
-        }
-
-        m::close();
-
-        parent::tearDown();
     }
 }
