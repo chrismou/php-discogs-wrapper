@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/chrismou/php-discogs-wrapper.svg?branch=master)](https://travis-ci.org/chrismou/php-discogs-wrapper)
 [![Test Coverage](https://codeclimate.com/github/chrismou/php-discogs-wrapper/badges/coverage.svg)](https://codeclimate.com/github/chrismou/php-discogs-wrapper/coverage)
 [![Code Climate](https://codeclimate.com/github/chrismou/php-discogs-wrapper/badges/gpa.svg)](https://codeclimate.com/github/chrismou/php-discogs-wrapper)
+[![Buy me a beer](https://img.shields.io/badge/donate-PayPal-019CDE.svg)](https://www.paypal.me/chrismou)
 
 A simple wrapper class for the discogs API.
 
